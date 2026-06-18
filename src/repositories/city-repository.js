@@ -1,6 +1,7 @@
 const { where } = require("sequelize");
 const { City } = require("../models/index");
 
+// TODO: Implement Singleton Pattern
 class CityRepository {
     async createCity({ name }) {
         try {
