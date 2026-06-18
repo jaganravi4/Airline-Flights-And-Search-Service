@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 
 const { PORT } = require("./config/serverConfig");
+const ApiRoutes = require("./routes/index");
 
 const app = express();
 
@@ -12,6 +13,8 @@ app.use(
 );
 
 app.use(bodyParser.json());
+
+app.use("/api", ApiRoutes);
 
 app.listen(PORT, () => {
     console.log(`Server Started on PORT ${PORT}`);
