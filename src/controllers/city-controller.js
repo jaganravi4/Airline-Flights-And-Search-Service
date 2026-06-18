@@ -69,7 +69,7 @@ const get = async (req, res) => {
             data: response,
             success: true,
             message: "Successfully fetched the city",
-            error: error,
+            error: {},
         });
     } catch (error) {
         console.log(error);
