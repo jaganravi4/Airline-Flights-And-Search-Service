@@ -1,0 +1,58 @@
+const { AirplaneRepository } = require("../repositories/index");
+const AirportService = require("./airport-service");
+
+class AirplaneService {
+    constructor() {
+        this.airplaneRepository = new AirplaneRepository();
+    }
+
+    async createAirplane({ modelNumber, capacity }) {
+        try {
+            const airplane = await this.airplaneRepository.createAirplane({
+                modelNumer,
+                capacity,
+            });
+            return airplane;
+        } catch (error) {
+            console.log("Something went wrong in the service layer");
+            throw { error };
+        }
+    }
+
+    async updateAirplane(airplaneId, data) {
+        try {
+            const airplane = await this.airplaneRepository.updateAirplane(
+                airplaneId,
+                data,
+            );
+            return airplane;
+        } catch (error) {
+            console.log("Something went wrong in the service layer");
+            throw { error };
+        }
+    }
+
+    async getAirplane(airplaneId) {
+        try {
+            const airplane =
+                await this.airplaneRepository.getAirplane(airplaneId);
+            return airplane;
+        } catch (error) {
+            console.log("Something went wrong in the service layer");
+            throw { error };
+        }
+    }
+
+    async deleteAirplane(airplaneId) {
+        try {
+            const response =
+                await this.airplaneRepository.deleteAirplane(airplaneId);
+            return response;
+        } catch (error) {
+            console.log("Something went wrong in the service layer");
+            throw { error };
+        }
+    }
+}
+
+module.exports = AirportService;
