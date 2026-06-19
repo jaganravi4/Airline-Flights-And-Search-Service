@@ -1,25 +1,32 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-    class City extends Model {
+    class Airport extends Model {
         static associate(models) {
-            this.hasMany(models.Airport, {
+            this.belongsTo(models.City, {
                 foreignKey: "cityId",
+                onDelete: "CASCADE",
             });
         }
     }
-    City.init(
+    Airport.init(
         {
             name: {
                 type: DataTypes.STRING,
                 allowNull: false,
-                unique: true,
+            },
+            address: {
+                type: DataTypes.STRING,
+            },
+            cityId: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
             },
         },
         {
             sequelize,
-            modelName: "City",
+            modelName: "Airport",
         },
     );
-    return City;
+    return Airport;
 };
