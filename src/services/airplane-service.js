@@ -1,5 +1,4 @@
 const { AirplaneRepository } = require("../repositories/index");
-const AirportService = require("./airport-service");
 
 class AirplaneService {
     constructor() {
@@ -9,7 +8,7 @@ class AirplaneService {
     async createAirplane({ modelNumber, capacity }) {
         try {
             const airplane = await this.airplaneRepository.createAirplane({
-                modelNumer,
+                modelNumber,
                 capacity,
             });
             return airplane;
@@ -55,4 +54,4 @@ class AirplaneService {
     }
 }
 
-module.exports = AirportService;
+module.exports = AirplaneService;

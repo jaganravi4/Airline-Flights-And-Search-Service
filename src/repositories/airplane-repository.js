@@ -1,12 +1,13 @@
 const { Airplane } = require("../models/index");
 
 class AirplaneRepository {
-    async createAirplane({ modelNumer, capacity }) {
+    async createAirplane({ modelNumber, capacity }) {
         try {
             const airplane = await Airplane.create({
-                modelNumer,
+                modelNumber,
                 capacity,
             });
+            return airplane;
         } catch (error) {
             console.log("Something went wrong in the repository layer");
             throw { error };
@@ -16,7 +17,7 @@ class AirplaneRepository {
     async updateAirplane(airplaneId, data) {
         try {
             const airplane = await Airplane.findByPk(airplaneId);
-            airplane.modelNumer = data.modelNumer;
+            airplane.modelNumber = data.modelNumber;
             airplane.capacity = data.capacity;
             await airplane.save();
             return airplane;
