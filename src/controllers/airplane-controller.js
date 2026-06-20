@@ -4,7 +4,7 @@ const airplaneService = new AirplaneService();
 
 const create = async (req, res) => {
     try {
-        const response = await airplaneService.createAirplane(req.body);
+        const response = await airplaneService.create(req.body);
         return res.status(201).json({
             data: response,
             success: true,
@@ -24,7 +24,7 @@ const create = async (req, res) => {
 
 const destroy = async (req, res) => {
     try {
-        const response = await airplaneService.deleteAirplane(req.params.id);
+        const response = await airplaneService.delete(req.params.id);
         return res.status(201).json({
             data: response,
             success: true,
@@ -44,7 +44,7 @@ const destroy = async (req, res) => {
 
 const get = async (req, res) => {
     try {
-        const response = await airplaneService.getAirplane(req.params.id);
+        const response = await airplaneService.get(req.params.id);
         return res.status(200).json({
             data: response,
             success: true,
@@ -62,12 +62,29 @@ const get = async (req, res) => {
     }
 };
 
+const getAll = async (req, res) => {
+    try {
+        const response = await airplaneService.getAll();
+        return res.status(200).json({
+            data: response,
+            success: true,
+            message: "Successfully fetched all airplanes",
+            error: {},
+        });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            data: {},
+            success: false,
+            message: "Not able to get all the airplanes",
+            error: error,
+        });
+    }
+};
+
 const update = async (req, res) => {
     try {
-        const response = await airplaneService.updateAirplane(
-            req.params.id,
-            req.body,
-        );
+        const response = await airplaneService.update(req.params.id, req.body);
         return res.status(200).json({
             data: response,
             success: true,
@@ -90,4 +107,5 @@ module.exports = {
     get,
     update,
     destroy,
+    getAll,
 };

@@ -4,7 +4,7 @@ const airportService = new AirportService();
 
 const create = async (req, res) => {
     try {
-        const response = await airportService.createAirport(req.body);
+        const response = await airportService.create(req.body);
         return res.status(201).json({
             data: response,
             success: true,
@@ -24,7 +24,7 @@ const create = async (req, res) => {
 
 const destroy = async (req, res) => {
     try {
-        const response = await airportService.deleteAirport(req.params.id);
+        const response = await airportService.delete(req.params.id);
         return res.status(201).json({
             data: response,
             success: true,
@@ -44,7 +44,7 @@ const destroy = async (req, res) => {
 
 const get = async (req, res) => {
     try {
-        const response = await airportService.getAirport(req.params.id);
+        const response = await airportService.get(req.params.id);
         return res.status(200).json({
             data: response,
             success: true,
@@ -64,10 +64,7 @@ const get = async (req, res) => {
 
 const update = async (req, res) => {
     try {
-        const response = await airportService.updateAirport(
-            req.params.id,
-            req.body,
-        );
+        const response = await airportService.update(req.params.id, req.body);
         return res.status(200).json({
             data: response,
             success: true,
@@ -85,9 +82,30 @@ const update = async (req, res) => {
     }
 };
 
+const getAll = async (req, res) => {
+    try {
+        const response = await airportService.getAll();
+        return res.status(200).json({
+            data: response,
+            success: true,
+            message: "Successfully fetched all airports",
+            error: {},
+        });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            data: {},
+            success: false,
+            message: "Not able to fetch all the airports",
+            error: error,
+        });
+    }
+};
+
 module.exports = {
     create,
     get,
     update,
     destroy,
+    getAll,
 };

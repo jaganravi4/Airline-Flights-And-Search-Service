@@ -4,8 +4,16 @@ const {
 } = require("../repositories/index");
 const { compareTime } = require("../utils/helper");
 const { Op } = require("sequelize");
+const CrudService = require("./crud-service");
 
-class FlightService {
+const flightRepository = new FlightRepository();
+const airplaneRepository = new AirplaneRepository();
+
+class FlightService extends CrudService {
+    constructor() {
+        super(flightRepository);
+    }
+
     #createFilter(data) {
         let filter = {};
 
@@ -41,51 +49,33 @@ class FlightService {
         return filter;
     }
 
-    constructor() {
-        this.flightRepository = new FlightRepository();
-        this.airplaneRepository = new AirplaneRepository();
-    }
-
-    async createFlight(data) {
+    async create(data) {
         try {
             if (!compareTime(data.departureTime, data.arrivalTime)) {
                 throw {
                     error: "Arrival time cannot be less than departure time",
                 };
             }
-            const airplane = await this.airplaneRepository.getAirplane(
-                data.airplaneId,
-            );
+            const airplane = await airplaneRepository.get(data.airplaneId);
             const totalSeats = airplane.capacity;
-            const flight = await this.flightRepository.createFlight({
+            const flight = await flightRepository.create({
                 ...data,
                 totalSeats,
             });
             return flight;
         } catch (error) {
-            console.log("Something went wrong in the service layer");
+            console.log("Something went wrong in the flight service");
             throw { error };
         }
     }
 
-    async getFlight(flightId) {
-        try {
-            const flight = await this.flightRepository.getFlight(flightId);
-            return flight;
-        } catch (error) {
-            console.log("Something went wrong in the service layer");
-            throw { error };
-        }
-    }
-
-    async getAllFlights(data) {
+    async getAll(data) {
         try {
             const filterObject = this.#createFilter(data);
-            const flights =
-                await this.flightRepository.getAllFlights(filterObject);
+            const flights = await flightRepository.getAll(filterObject);
             return flights;
         } catch (error) {
-            console.log("Something went wrong in the service layer");
+            console.log("Something went wrong in the flight service");
             throw { error };
         }
     }
